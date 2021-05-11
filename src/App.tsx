@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import EventsExample from "./components/EventsExample";
+import {BrowserRouter, NavLink, Route} from "react-router-dom";
+import UserPage from "./components/UserPage";
+import TodosPage from "./components/TodosPage";
+import UserItemPage from "./components/UserItemPage";
+import TodoItemPage from './components/TodoItemPage';
+import PhotosPage from "./components/PhotosPage";
 
-function App() {
+const App = () => {
+    const Nav =  {
+        color: 'white',
+        padding: '1rem',
+        textDecoration:'none',
+        fontSize: '20px'
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <EventsExample />
+      <div>
+          <div style={{marginTop:'1rem',background:'lightblue',height:'25px'}}>
+              <NavLink style={Nav} to={"/users"}>Пользователи</NavLink>
+              <NavLink style={Nav} to={"/todos"}>Список дел</NavLink>
+              <NavLink style={Nav} to={"/photos"}>Фото</NavLink>
+          </div>
+
+
+          <Route path={"/users"} exact>
+              <UserPage />
+          </Route>
+          <Route path={"/todos"} exact>
+              <TodosPage />
+          </Route>
+          <Route path={"/photos"} exact>
+              <PhotosPage />
+          </Route>
+
+
+          <Route path={"/users/:id"}>
+              <UserItemPage />
+          </Route>
+          <Route path={"/todos/:id"}>
+              <TodoItemPage />
+          </Route>
+      </div>
+    </BrowserRouter>
   );
 }
 
